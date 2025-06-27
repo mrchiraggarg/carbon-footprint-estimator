@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityInput } from '../utils/calculator';
+import type { ActivityInput } from '../utils/calculator';
 
 type Props = {
   onSubmit: (input: ActivityInput, mode: 'daily' | 'monthly') => void;
