@@ -36,7 +36,7 @@ function App() {
         )
       }
       <footer style={{ marginTop: 24 }}>
-        <small>Built with React, Vite, TypeScript · Data: IPCC, EPA, OurWorldInData</small>
+        <small>Made By: Chirag Garg</small>
       </footer>
     </div>
   );
