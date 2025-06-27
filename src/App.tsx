@@ -4,7 +4,7 @@ import Dashboard from './components/Dashboard';
 import Tips from './components/Tips';
 import DarkModeToggle from './components/DarkModeToggle';
 import useDarkMode from './hooks/useDarkMode';
-import { calculateEmissions, ActivityInput } from './utils/calculator';
+import { calculateEmissions } from './utils/calculator';
 
 function App() {
   const [dark, setDark] = useDarkMode();
