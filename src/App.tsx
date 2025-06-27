@@ -5,6 +5,7 @@ import Tips from './components/Tips';
 import DarkModeToggle from './components/DarkModeToggle';
 import useDarkMode from './hooks/useDarkMode';
 import { calculateEmissions } from './utils/calculator';
+import type { ActivityInput } from './utils/calculator';
 
 function App() {
   const [dark, setDark] = useDarkMode();
