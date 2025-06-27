@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import ActivityForm from './components/ActivityForm';
+import Dashboard from './components/Dashboard';
+import Tips from './components/Tips';
+import DarkModeToggle from './components/DarkModeToggle';
+import useDarkMode from './hooks/useDarkMode';
+import { calculateEmissions, ActivityInput } from './utils/calculator';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [dark, setDark] = useDarkMode();
+  const [result, setResult] = useState<ReturnType<typeof calculateEmissions> | null>(null);
+
+  function handleSubmit(input: ActivityInput, mode: 'daily' | 'monthly') {
+    setResult(calculateEmissions(input, mode));
+  }
+
+  function handleReset() {
+    setResult(null);
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className={dark ? 'dark' : ''}>
+      <header>
+        <h1>Carbon Footprint Estimator</h1>
+        <DarkModeToggle dark={dark} setDark={setDark} />
+      </header>
+      {!result
+        ? <ActivityForm onSubmit={handleSubmit} onReset={handleReset} />
+        : (
+          <>
+            <Dashboard total={result.total} breakdown={result.breakdown} />
+            <Tips breakdown={result.breakdown} />
+            <button onClick={handleReset} style={{ marginTop: 16 }}>Reset</button>
+          </>
+        )
+      }
+      <footer style={{ marginTop: 24 }}>
+        <small>Built with React, Vite, TypeScript · Data: IPCC, EPA, OurWorldInData</small>
+      </footer>
+    </div>
+  );
 }
 
-export default App
+export default App;
